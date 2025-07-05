@@ -123,6 +123,7 @@ class Doge:
 
 
     def save_uploaded_files_to_json(self):
+        """ function for saving a json file"""
         with open("uploaded_files.json","w",encoding="utf-8") as json_file:
             json.dump(self.uploaded_files, json_file, ensure_ascii=False, indent=2)
 
