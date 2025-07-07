@@ -4,6 +4,7 @@ import requests
 from tqdm import tqdm
 import time
 
+
 class Doge:
     def __init__(self, token_yd):
         self.base_url = "https://cloud-api.yandex.net/v1/disk/"
@@ -12,6 +13,7 @@ class Doge:
         self.token_yd = token_yd
         self.headers = {"Authorization": f"{self.token_yd}"}
         self.uploaded_files = []
+
 
     def created_list_breed(self):
         """
@@ -94,6 +96,7 @@ class Doge:
         response = requests.post(url_upload, params=params, headers=self.headers)
         self.uploaded_files.append({"file_name": file_name})
 
+
     def upload_images_folder(self, breed_name, sub_breed=None):
         """
         The main function is to create a folder and
@@ -141,8 +144,3 @@ class Doge:
                     self.upload_images_folder(breed)
                     pbar.update(1)
         self.save_uploaded_files_to_json()
-
-
-
-doge = Doge("y0__xCVor-TBBjblgMg-pSF2xOPBXG4NVG5rh0PXmZpx8aMyodAyg")
-doge.upload_all_images()
