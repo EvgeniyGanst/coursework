@@ -127,7 +127,3 @@ class Doge:
         with open("uploaded_files.json","w",encoding="utf-8") as json_file:
             json.dump(self.uploaded_files, json_file, ensure_ascii=False, indent=2)
 
-
-dog = Doge("y0__xCVor-TBBjblgMg-pSF2xOPBXG4NVG5rh0PXmZpx8aMyodAyg")
-dog.created_list_breed()
-dog.upload_images_folder("appenzeller")
