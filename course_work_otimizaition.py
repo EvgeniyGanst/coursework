@@ -30,7 +30,7 @@ class Doge:
         :return:
         """
         if breed_name in self.dogs_dict:
-            print(f"Порода {breed_name} найдена.")
+            print(f"\nПорода {breed_name} найдена.")
             return breed_name
         raise ValueError (f'Порода "{breed_name}" не найдена в списке.')
 
@@ -107,14 +107,15 @@ class Doge:
             folder_path = f"Dogs/{breed_name}/{sub_breed}"
         self.create_folders_for_breed_and_sub_breed(breed_name, sub_breed)
 
-        url_images = f"https://dog.ceo/api/breed/{breed_name}/images/random/10"
+        url_images = f"https://dog.ceo/api/breed/{breed_name}/images/random/5"
         if sub_breed is not None:
-            url_images = f"https://dog.ceo/api/breed/{breed_name}/{sub_breed}/images/random/1"
+            url_images = f"https://dog.ceo/api/breed/{breed_name}/{sub_breed}/images/random/2"
 
         response = requests.get(url_images)
 
         images = response.json().get("message", [])
-        with tqdm(images, desc=f'Загрузка изображений для {breed_name}/{sub_breed if sub_breed else breed_name}', unit="изображений") as pbar:
+        with tqdm(images, desc=f'Загрузка изображений для {breed_name}/'
+                               f'{sub_breed if sub_breed else breed_name}', unit=" изображений") as pbar:
             for image_url in pbar:
                 file_name = f'{image_url.split('/')[-1]}-{breed_name}'
                 self.upload_image(image_url, folder_path, file_name)
@@ -127,3 +128,21 @@ class Doge:
         with open("uploaded_files.json","w",encoding="utf-8") as json_file:
             json.dump(self.uploaded_files, json_file, ensure_ascii=False, indent=2)
 
+
+    def upload_all_images(self):
+        total_items = sum(len(sub_breeds) + 1 for sub_breeds in self.dogs_dict.values())
+        with tqdm(total=total_items, desc="Загрузка всех изображений", unit=f" пород/подпород")as pbar:
+            for breed, sub_breed in self.dogs_dict.items():
+                if sub_breed:
+                    for sb in sub_breed:
+                        self.upload_images_folder(breed, sb)
+                        pbar.update(1)
+                else:
+                    self.upload_images_folder(breed)
+                    pbar.update(1)
+        self.save_uploaded_files_to_json()
+
+
+
+doge = Doge("y0__xCVor-TBBjblgMg-pSF2xOPBXG4NVG5rh0PXmZpx8aMyodAyg")
+doge.upload_all_images()
