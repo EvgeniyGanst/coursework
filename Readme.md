@@ -6,3 +6,4 @@
 #### dog = Doge(token_yand) # токен заранее получить на сайте https://yandex.ru/dev/disk/poligon/
 #### dog.created_list_breed() #Создастся файл с названием list breed and sub breed dogs в нем все породы и возможные подпороды
 #### dog.upload_images_folder("Название породы", "Подпороду") для загрузки на ваш яндекс диск картинок
+#### dog.upload_all_images() для загрузки всех пород и подпород на яндекс диск
